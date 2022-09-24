@@ -17,7 +17,7 @@ set(source_files
 # shared and static libraries
 add_library(${PROJECT_NAME} SHARED ${source_files})
 add_library(${PROJECT_NAME}_static STATIC ${source_files})
-set_target_properties(${PROJECT_NAME}_static PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
+set_target_properties(${PROJECT_NAME}_static PROPERTIES OUTPUT_NAME ${PROJECT_NAME}_static)
 
 # Export the include directory
 target_include_directories(
