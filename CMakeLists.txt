@@ -25,7 +25,10 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/loggerconf.h ${PROJECT_BINARY_DIR
 # shared and static libraries
 add_library(${PROJECT_NAME} SHARED ${source_files})
 add_library(${PROJECT_NAME}_static STATIC ${source_files})
-set_target_properties(${PROJECT_NAME}_static PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
+
+if (NOT MSVC)
+    set_target_properties(${PROJECT_NAME}_static PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
+endif()
 
 # Export the include directory
 target_include_directories(
