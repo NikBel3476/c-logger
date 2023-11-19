@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(logger C)
 
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
 if (MSVC)
     set(CMAKE_C_FLAGS "/Wall")
     set(CMAKE_C_FLAGS_RELEASE "/O2")
@@ -42,6 +44,10 @@ target_include_directories(
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
+
+if (NOT MSVC)
+    set_target_properties(${PROJECT_NAME}_static PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
+endif()
 
 ### Install
 install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
