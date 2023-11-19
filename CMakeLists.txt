@@ -1,9 +1,14 @@
 cmake_minimum_required(VERSION 3.0)
 project(logger C)
 
-set(CMAKE_C_FLAGS "-Wall -std=c89")
-set(CMAKE_C_FLAGS_RELEASE "-O2 -DNDEBUG")
-set(CMAKE_C_FLAGS_DEBUG "-g")
+if (MSVC)
+    set(CMAKE_C_FLAGS "/Wall")
+    set(CMAKE_C_FLAGS_RELEASE "/O2")
+else()
+    set(CMAKE_C_FLAGS "-Wall -std=c89")
+    set(CMAKE_C_FLAGS_RELEASE "-O2 -DNDEBUG")
+    set(CMAKE_C_FLAGS_DEBUG "-g")
+endif()
 
 option(build_tests "Build all of own tests" OFF)
 option(build_examples "Build example programs" OFF)
@@ -25,10 +30,6 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/loggerconf.h ${PROJECT_BINARY_DIR
 # shared and static libraries
 add_library(${PROJECT_NAME} SHARED ${source_files})
 add_library(${PROJECT_NAME}_static STATIC ${source_files})
-
-if (NOT MSVC)
-    set_target_properties(${PROJECT_NAME}_static PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
-endif()
 
 # Export the include directory
 target_include_directories(
